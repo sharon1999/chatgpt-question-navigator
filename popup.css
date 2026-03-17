@@ -9,8 +9,8 @@
 }
 
 body {
-  width: 320px;
-  max-height: 450px;
+  width: 400px;
+  height: 550px;
   margin: 0;
   font-family:
     -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
@@ -94,6 +94,7 @@ body {
 
 .question-list {
   flex: 1;
+  min-height: 0;
   overflow-y: auto;
   padding: 12px;
   display: flex;
@@ -185,13 +186,9 @@ body {
 }
 
 .question-text {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
   padding-right: 20px;
+  word-wrap: break-word;
+  white-space: pre-wrap;
 }
 
 .empty-state {

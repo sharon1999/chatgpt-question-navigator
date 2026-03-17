@@ -10,10 +10,17 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Get active tab
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 
-  if (!tab || !tab.url.includes("chatgpt.com")) {
+  if (
+    !tab ||
+    !(
+      tab.url.includes("chatgpt.com") ||
+      tab.url.includes("claude.ai") ||
+      tab.url.includes("gemini.google.com")
+    )
+  ) {
     loading.style.display = "none";
     emptyState.textContent =
-      "Please open a ChatGPT conversation to use this extension.";
+      "Please open ChatGPT, Claude, or Gemini to use this extension.";
     emptyState.style.display = "block";
     if (searchInput) searchInput.disabled = true;
     if (exportBtn) exportBtn.disabled = true;
@@ -122,25 +129,18 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
     }
 
-    // Set up export listener
     if (exportBtn) {
       exportBtn.addEventListener("click", () => {
-        let exportText = "ChatGPT Question Navigator - Export\n";
-        exportText += "===================================\n\n";
+        // Change button state to loading
+        const originalIcon = exportBtn.innerHTML;
+        exportBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg>`;
+        exportBtn.disabled = true;
 
-        allQuestions.forEach((q, i) => {
-          exportText += `--- Question #${i + 1} ---\n${q.text}\n\n`;
+        chrome.storage.local.set({ exportData: allQuestions }, () => {
+          chrome.tabs.create({ url: chrome.runtime.getURL("export.html") });
+          exportBtn.innerHTML = originalIcon;
+          exportBtn.disabled = false;
         });
-
-        const blob = new Blob([exportText], { type: "text/plain" });
-        const url = URL.createObjectURL(blob);
-
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "chatgpt_questions.txt";
-        a.click();
-
-        URL.revokeObjectURL(url);
       });
     }
   });
