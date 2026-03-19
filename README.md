@@ -1,12 +1,16 @@
-# ChatGPT Question Navigator
+# AI Question Navigator
 
-**ChatGPT Question Navigator** is a simple browser extension that helps you easily navigate through your long ChatGPT conversations by automatically extracting and displaying exclusively the questions you've asked. Clicking on any question in the extension popup automatically scrolls the chat window directly to that point in the conversation.
+**AI Question Navigator** is a simple browser extension that helps you easily navigate through your long AI conversations by automatically extracting and displaying exclusively the questions you've asked. Clicking on any question in the extension popup automatically scrolls the chat window directly to that point in the conversation. It also supports exporting your conversations as a formatted PDF!
 
 ## Features
 
-- **Quick Overview:** Instantly view a list of all the prompts/questions you have asked within the current ChatGPT chat.
-- **Auto-scroll:** Click on any question in the popup list to smoothly scroll your ChatGPT tab directly to that specific message.
-- **Lightweight & Fast:** Runs efficiently on `chatgpt.com` without slowing down your browser.
+- **Multi-Platform Support:** Works seamlessly on ChatGPT, Claude, and Gemini.
+- **Quick Overview:** Instantly view a list of all the prompts/questions you have asked within the current conversation.
+- **Search & Filter:** Easily find specific questions using the built-in search bar in the popup.
+- **Copy Prompts:** Quickly copy any of your previous prompts to reusing them.
+- **Export to PDF:** Export your entire conversation (questions and AI responses) into a beautifully formatted PDF document.
+- **Auto-scroll:** Click on any question in the popup list to smoothly scroll your chat tab directly to that specific message.
+- **Lightweight & Fast:** Runs efficiently without slowing down your browser.
 
 ## Installation
 
@@ -28,18 +32,22 @@ The extension should now be installed and the icon will appear in your browser's
 
 ## Usage
 
-1. Open [ChatGPT](https://chatgpt.com) and navigate to any conversation.
-2. Click the **ChatGPT Question Navigator** extension icon in your browser toolbar.
+1. Open [ChatGPT](https://chatgpt.com), [Claude](https://claude.ai), or [Gemini](https://gemini.google.com) and navigate to any conversation.
+2. Click the **AI Question Navigator** extension icon in your browser toolbar.
 3. A popup will appear listing all the questions you've asked in that specific chat.
-4. Click on any question in the list to scroll directly to it on the page.
+4. Use the search bar to find specific questions, or click the Export button to save the conversation as a PDF.
+5. Click on any question in the list to scroll directly to it on the page.
 
 ## File Structure
 
 - `manifest.json`: Configuration file for the browser extension.
-- `content.js`: The script that reads the questions from the active ChatGPT conversation and handles the scrolling behavior.
+- `content.js`: The script that reads the questions from the active AI conversation and handles the scrolling behavior.
 - `popup.html` & `popup.js`: The user interface and logic for the extension's popup window.
+- `export.html` & `export.js`: Handles the formatting and generation of the PDF export.
+- `html2pdf.bundle.min.js`: Library used for PDF generation.
 
 ## Permissions required
 
 - `activeTab` & `scripting`: Needed to read the text of the chat messages and execute the auto-scroll script on the page.
-- `host_permissions` (`*://chatgpt.com/*`): Limits the extension to only run on ChatGPT.
+- `storage`: Required to temporarily store conversation data for PDF export.
+- `host_permissions` (`*://chatgpt.com/*`, `*://claude.ai/*`, `*://gemini.google.com/*`): Limits the extension to only run on supported AI platforms.
